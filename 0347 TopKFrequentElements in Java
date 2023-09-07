@@ -1,0 +1,73 @@
+class Solution  {
+   
+   public class Entry implements Comparable<Entry> // create object for priority queue
+   {    
+        private int key;
+        private int val;
+
+        public Entry (Map.Entry<Integer, Integer> entry)
+        {
+            key = entry.getKey();
+            val = entry.getValue();
+        }
+
+        @Override
+        public int compareTo(Entry other) 
+        {
+            if(this.val == other.val)
+            {
+                return 0;
+            }
+            if(this.val>other.val)
+            {
+                return -1;
+            }
+            else
+            {
+                return 1;
+            }
+        }
+   }
+   
+    
+    public int[] topKFrequent(int[] nums, int k) {
+        HashMap <Integer, Integer> frequency = new HashMap <Integer, Integer>();
+        // add all values and frequencies for each one into a hashmap
+
+        for(int i: nums)
+        {
+           if(frequency.containsKey(i))
+           {
+               int count = frequency.get(i);
+               frequency.put(i,count+1);
+           }
+           else
+           {
+               frequency.put(i,1);
+           }
+        }
+
+        PriorityQueue<Entry> q = new PriorityQueue<>();
+        // add each value in the hashmap to the priority queue
+
+        for (Map.Entry<Integer, Integer> entry : frequency.entrySet())
+        {
+            Entry add = new Entry(entry);
+            q.add(add);
+        }
+
+        int [] ans = new int [k];
+
+        // remove k items from the queue
+        for(int i =0; i< k; i++)
+        {
+            Entry peek = q.peek();
+            q.remove(peek);
+            ans[i] = peek.key;
+        }
+
+        // return the k items removed from the priority queue
+        return ans;
+
+    }
+}
