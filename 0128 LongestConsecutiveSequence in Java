@@ -1,0 +1,32 @@
+class Solution {
+    public int longestConsecutive(int[] nums) {
+      HashSet <Integer> cons = new HashSet <Integer>();
+      ArrayList<Integer> noDup = new ArrayList<Integer>();
+
+      for(int i: nums)
+      {
+          if(cons.add(i))
+          {
+              noDup.add(i); // we dont need to run through all the duplicate values so we create a new array w the values we care abt.
+          }
+      }
+
+      int max = 0; // track of max sequence
+      for(int i: noDup)
+      {
+          int count = 0;
+          if(!cons.contains(i-1)) // we know through this statement if it is the start of a sequence. We dont need to check ones that are not the start of a sequence.
+          {
+              int increment = i;
+                while(cons.contains(increment)) // iterate to find the length of the that sequence
+                {
+                    count++;
+                    increment++;
+                }
+          }
+          max = Math.max(count,max); // then compare to other sequences
+      }
+      return max;
+    }
+
+}
