@@ -1,0 +1,24 @@
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        // used hint but this is a very interesting/smart algorithm I should remeber. I can solve it in linear time if I go left + right multiplication.
+
+      int [] left = new int [nums.length];
+      int prevLeft = 1;
+
+      for (int i =0; i< nums.length; i++)  // create array with left product
+      {
+          left[i] = prevLeft;
+          prevLeft *= nums[i];
+          
+      }
+
+      prevLeft = 1;
+      for(int i =0; i<nums.length; i++) // multiply right product w left product
+      {
+         left[nums.length-i-1] *= prevLeft;
+         prevLeft *= nums[nums.length-i-1];
+      }
+
+      return left;
+    }
+}
